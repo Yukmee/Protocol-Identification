@@ -7,12 +7,18 @@ from protocol_dict import protocol_dict
 import pandas as pd
 import numpy as np
 import pickle
+import parse_pcap
 
-
+# 生成新的 cvs 文件, 如果有必要
+# parse_pcap.gen_csv()
 dataset = pd.read_csv("./features_all_in_one.csv")
 X = dataset.drop('label', axis=1)
-# y = dataset['label'].apply(lambda x: protocol_dict[x])
-y = dataset['label']
+# X = X.fillna(X.mean())
+X = np.nan_to_num(X)
+print(f'!!!{np.where(np.isnan(X))}')
+
+y = dataset['label'].apply(lambda x: protocol_dict[x])
+# y = dataset['label']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, random_state=0)
 regressor = DecisionTreeRegressor()
@@ -39,5 +45,3 @@ model_y_pred = model.predict(X_test)
 # Print predictions from saved model.
 df = pd.DataFrame({'Actual': y_test, 'Predicted': model_y_pred})
 print(df)
-
-
