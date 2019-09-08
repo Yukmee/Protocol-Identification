@@ -19,8 +19,8 @@ def upload_file():
         return render_template('index.html', test_var='文件成功上传!')
 
 
-@app.route('/test', methods=['GET'])
-def test():
+@app.route('/predict', methods=['GET'])
+def predict():
     return render_template('index.html', output='...')
 
 
