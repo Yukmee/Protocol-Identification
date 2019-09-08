@@ -29,7 +29,9 @@ table_dict = {
 
 
 # Helper Methods
-def gen_file_path(_file_name):
+def gen_file_path(_file_name, from_upload):
+    if from_upload:
+        return './saved_pcaps/' + _file_name
     return './pcap/' + _file_name
 
 
@@ -45,8 +47,8 @@ def ip_addr_to_numeric(ip_addr):
     return int(result)
 
 
-def converge_features(file_name):
-    pl = rdpcap(gen_file_path(file_name))
+def converge_features(file_name, from_upload):
+    pl = rdpcap(gen_file_path(file_name, from_upload))
     # pl.show()
     sessions = pl.sessions()
     i = 0
@@ -121,11 +123,16 @@ def export_to_single_csv():
     df.to_csv('features_all_in_one.csv', index=None)  # Don't forget to add '.csv' at the end of the path
 
 
+def export_to_df(file_name):
+    converge_features(file_name, True)
+    return DataFrame(table_dict, columns=feature_list)
+
+
 def gen_csv():
     files_list = os.listdir("./pcap")
     for file in files_list:
         if file.endswith('.pcap') or file.endswith('.pcapng'):
-            converge_features(file)
+            converge_features(file, False)
     export_to_single_csv()
 
 
