@@ -136,4 +136,3 @@ def gen_csv():
     export_to_single_csv()
 
 
-gen_csv()

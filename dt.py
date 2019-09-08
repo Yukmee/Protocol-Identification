@@ -16,7 +16,7 @@ y = dataset['label']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, random_state=0)
 regressor = DecisionTreeRegressor()
-regressor.fit(X_train, y_train)
+regressor.fit(X_train, y_train)  # TODO: 解决'ValueError: Input contains NaN... too large for dtype('float32').'
 classifier = DecisionTreeClassifier()
 classifier.fit(X_train, y_train)
 y_pred_a = classifier.predict(X_test)

@@ -26,16 +26,25 @@ def upload_file():
 
 @app.route('/predict', methods=['GET'])
 def predict():
-    # Loading model to compare the results
-    model = pickle.load(open('saved_model.pkl', 'rb'))
-
-    # TODO: - Implement this!!!
     # 先将 pcap 变成 DataFrame
+    print(uploaded_pcap_file_name)
     df = parse_pcap.export_to_df(uploaded_pcap_file_name)
     print(df)
-    # model_y_pred = model.predict(X_test)
+    x_test = df.drop('label', axis=1)
+    print(x_test)
 
-    return render_template('index.html', output='...')
+    # Loading model to compare the results
+    model = pickle.load(open('saved_model.pkl', 'rb'))
+    y_pred = model.predict(x_test)
+    # 按出现频率排序
+    print(type(y_pred))
+    y_pred.sort()
+
+    import protocol_dict
+    return render_template('index.html',
+                           proto_dict=protocol_dict.protocol_dict,
+                           file_name=uploaded_pcap_file_name,
+                           output=f'{y_pred}')
 
 
 if __name__ == '__main__':
