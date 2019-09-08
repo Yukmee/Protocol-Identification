@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+import numpy as np
 
 dataset = pd.read_csv('features_all_in_one.csv')
 X = dataset.iloc[:, 1:]
@@ -25,11 +26,15 @@ def gen_labels_dict():
 y = Y['label'].apply(lambda x: _label_dict[x])
 
 # 数据预处理, 小心 ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+# print(np.any(np.isnan(X)))  # True
+# print(np.all(np.isfinite(X)))  # False
+# 只有可能是太大了
+
 
 # Fitting model with training data
-regressor = LinearRegression()
-regressor.fit(X, y)
-regressor.predict([2211115158, 24411, 2211116036, 53, 17, 1, 0, 63])
+# regressor = LinearRegression()
+# regressor.fit(X, y)
+# regressor.predict([2211115158, 24411, 2211116036, 53, 17, 1, 0, 63])
 
 
 
