@@ -100,6 +100,7 @@ def converge_features(file_name):
             # packet.show()  # 超详细的!
         end_time = sessions[session][j - 1].time
         duration = end_time - start_time
+        duration = ("%.5f" % duration)
         packets_count = j
 
         # Append these features to table_dict
