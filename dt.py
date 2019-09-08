@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 
 dataset = pd.read_csv("./features_all_in_one.csv")
 print(dataset.shape)
-X = dataset.drop('label',axis=1)
+X = dataset.drop('label', axis=1)
 y = dataset['label']
 
-X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.05,random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, random_state=0)
 regressor = DecisionTreeRegressor()
 regressor.fit(X_train, y_train)
 classifier = DecisionTreeClassifier()
@@ -21,7 +21,7 @@ y_pred_a = classifier.predict(X_test)
 y_pred = regressor.predict(X_test)
 print(confusion_matrix(y_test, y_pred_a))
 print(classification_report(y_test, y_pred_a))
-df=pd.DataFrame({'Actual':y_test, 'Predicted':y_pred})
+df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
 print(df)
 print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
 print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))
