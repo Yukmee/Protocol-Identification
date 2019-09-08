@@ -7,12 +7,15 @@
 <body>
 <h2>{{test_var}}</h2>
 
-<form action="http://localhost:5000/uploader"
-      method="POST"
-      enctype="multipart/form-data">
-    <input type="file" name="file"/>
-    <input type="submit"/>
-</form>
+<div>
+    <h3>请选择pcap文件上传</h3>
+    <form action="http://localhost:5000/uploader"
+          method="POST"
+          enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <input type="submit" value="提交"/>
+    </form>
+</div>
 
 <!--Select Box-->
 <div class="custom-select" style="width:200px;">
@@ -25,7 +28,10 @@
     </label>
 </div>
 
-<h3>{{output}}</h3>
+<div>
+    <h3>判断结果</h3>
+    <h3>{{output}}</h3>
+</div>
 
 </body>
 </html>
