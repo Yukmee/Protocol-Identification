@@ -6,12 +6,13 @@ from sklearn import metrics
 from protocol_dict import protocol_dict
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 dataset = pd.read_csv("./features_all_in_one.csv")
 print(dataset.shape)
 X = dataset.drop('label', axis=1)
-y = dataset['label'].apply(lambda x: protocol_dict[x])
+# y = dataset['label'].apply(lambda x: protocol_dict[x])
+y = dataset['label']
+print(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, random_state=0)
 regressor = DecisionTreeRegressor()
