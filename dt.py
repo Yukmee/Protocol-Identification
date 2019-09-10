@@ -15,7 +15,7 @@ dataset = pd.read_csv("./features_all_in_one.csv")
 X = dataset.drop('label', axis=1)
 # X = X.fillna(X.mean())
 X = np.nan_to_num(X)
-print(f'!!!{np.where(np.isnan(X))}')
+# print(f'!!!{np.where(np.isnan(X))}')
 
 y = dataset['label'].apply(lambda x: protocol_dict[x])
 # y = dataset['label']
@@ -45,3 +45,4 @@ model_y_pred = model.predict(X_test)
 # Print predictions from saved model.
 df = pd.DataFrame({'Actual': y_test, 'Predicted': model_y_pred})
 print(df)
+print(classification_report(y_test, model_y_pred))
