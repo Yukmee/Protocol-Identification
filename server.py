@@ -1,6 +1,4 @@
 import pickle
-from abc import ABC
-
 import parse_pcap
 import protocol_dict
 from collections import Counter
@@ -61,26 +59,14 @@ def predict():
             self.proto = proto
             self.possibility = possibility
 
-    # items = [Item('Name1', 'Description1'),
-    #          Item('Name2', 'Description2'),
-    #          Item('Name3', 'Description3')]
-    # Or, equivalently, some dicts
-    items = [dict(proto='Name1', possibility='Description1'),
-             dict(proto='Name2', possibility='Description2'),
-             dict(proto='Name3', possibility='Description3')]
-
     items = [Item(x, sth_new[x] / total_session) for x in sth_new]
 
     # Populate the table
     table = ItemTable(items)
 
-    # return render_template('index.html',
-    #                        file_name=uploaded_pcap_file_name,
-    #                        output=f'{sth_new}',
-    #                        table=table
-    #                        )
-
     return render_template('index.html',
+                           # file_name=uploaded_pcap_file_name,
+                           # output=f'{sth_new}',
                            table=table
                            )
 
