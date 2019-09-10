@@ -10,7 +10,7 @@ import pickle
 import parse_pcap
 
 # 生成新的 cvs 文件, 如果有必要
-parse_pcap.gen_csv()
+# parse_pcap.gen_csv()
 dataset = pd.read_csv("./features_all_in_one.csv")
 X = dataset.drop('label', axis=1)
 # X = X.fillna(X.mean())
