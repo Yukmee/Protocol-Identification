@@ -12,7 +12,8 @@ feature_list = [
     'proto',
     'packets_count',
     'duration',
-    'total_len'
+    'total_len',
+    'mean_ttl'
 ]
 
 table_dict = {
@@ -24,7 +25,8 @@ table_dict = {
     'proto': [],
     'packets_count': [],
     'duration': [],
-    'total_len': []
+    'total_len': [],
+    'mean_ttl': []
 }
 
 
@@ -65,6 +67,7 @@ def converge_features(file_name, from_upload):
         packets_count = 0
         duration = 0
         total_len = 0
+        mean_ttl = 0
 
         session_parts = session.split(' ')
         try:
@@ -92,6 +95,7 @@ def converge_features(file_name, from_upload):
                 start_time = packet.time
                 try:
                     proto = packet[IP].proto
+                    mean_ttl += packet[IP].ttl
                 except IndexError:
                     proto = -1
             j += 1
@@ -104,6 +108,7 @@ def converge_features(file_name, from_upload):
         duration = end_time - start_time
         duration = ("%.5f" % duration)
         packets_count = j
+        mean_ttl /= j
 
         # Append these features to table_dict
         table_dict['label'].append(label)
@@ -115,6 +120,7 @@ def converge_features(file_name, from_upload):
         table_dict['packets_count'].append(packets_count)
         table_dict['duration'].append(duration)
         table_dict['total_len'].append(total_len)
+        table_dict['mean_ttl'].append(mean_ttl)
 
 
 def export_to_single_csv():
@@ -136,3 +142,4 @@ def gen_csv():
     export_to_single_csv()
 
 
+gen_csv()
