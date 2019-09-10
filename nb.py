@@ -7,20 +7,17 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, Bernoul
 
 from protocol_dict import protocol_dict
 
-dataset = pandas.read_csv("./features_all_in_one.csv")
-X = dataset.drop('label', axis=1)
-X = numpy.nan_to_num(X)
-# MARK: - 处理负数
-X = numpy.where(X > 0, X, 0)
-y = dataset['label'].apply(lambda x: protocol_dict[x])
+import proc_csv
 
-# iris = datasets.load_iris()
-#
-# gnb = GaussianNB()
-# y_pred = gnb.fit(iris.data, iris.target).predict(iris.data)
-# print("Number of mislabeled points out of a total %d points : %d"
-#       % (iris.data.shape[0], (iris.target != y_pred).sum()))
+# dataset = pandas.read_csv("./features_all_in_one.csv")
+# X = dataset.drop('label', axis=1)
+# X = numpy.nan_to_num(X)
+# # MARK: - 处理负数
+# X = numpy.where(X > 0, X, 0)
+# y = dataset['label'].apply(lambda x: protocol_dict[x])
 
+
+X, y = proc_csv.process_csv('features_all_in_one')
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 # nb = GaussianNB()  # 0.31
 # nb = MultinomialNB()  # 0.16

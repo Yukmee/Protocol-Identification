@@ -3,6 +3,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn import metrics
+
+import proc_csv
 from protocol_dict import protocol_dict
 import pandas as pd
 import numpy as np
@@ -11,15 +13,8 @@ import parse_pcap
 
 # 生成新的 cvs 文件, 如果有必要
 # parse_pcap.gen_csv()
-dataset = pd.read_csv("./features_all_in_one.csv")
-X = dataset.drop('label', axis=1)
-# X = X.fillna(X.mean())
-X = np.nan_to_num(X)
-# print(f'!!!{np.where(np.isnan(X))}')
 
-y = dataset['label'].apply(lambda x: protocol_dict[x])
-# y = dataset['label']
-
+X, y = proc_csv.process_csv('features_all_in_one')
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.23, random_state=0)
 regressor = DecisionTreeRegressor()
 regressor.fit(X_train, y_train)  # MARK: 解决了'ValueError: Input contains NaN... too large for dtype('float32').'
