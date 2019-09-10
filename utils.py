@@ -80,6 +80,6 @@ def gen_proto_prediction_table_html(y_pred):
 
 # Helper Methods
 def find_key_by_value(x):
-    for key in protocol_dict.protocol_dict.keys():
+    for key in protocol_dict.keys():
         if protocol_dict[key] == x:
             return key
