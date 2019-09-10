@@ -1,11 +1,18 @@
 import pickle
 import parse_pcap
+import protocol_dict
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
 uploaded_pcap_file_name = ''
+
+
+def find_key_by_value(x):
+    for key in protocol_dict.protocol_dict.keys():
+        if protocol_dict.protocol_dict[key] == x:
+            return key
 
 
 @app.route('/')
@@ -27,24 +34,19 @@ def upload_file():
 @app.route('/predict', methods=['GET'])
 def predict():
     # 先将 pcap 变成 DataFrame
-    print(uploaded_pcap_file_name)
     df = parse_pcap.export_to_df(uploaded_pcap_file_name)
-    print(df)
     x_test = df.drop('label', axis=1)
-    print(x_test)
 
     # Loading model to compare the results
     model = pickle.load(open('saved_model.pkl', 'rb'))
     y_pred = model.predict(x_test)
     # 按出现频率排序
-    print(type(y_pred))
     y_pred.sort()
+    sth = [find_key_by_value(x) for x in y_pred]
 
-    import protocol_dict
     return render_template('index.html',
-                           proto_dict=protocol_dict.protocol_dict,
                            file_name=uploaded_pcap_file_name,
-                           output=f'{y_pred}')
+                           output=f'{sth}')
 
 
 if __name__ == '__main__':
